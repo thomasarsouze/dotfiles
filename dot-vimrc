@@ -1,0 +1,17 @@
+set encoding=utf-8
+set fileencoding=utf-8
+syntax on
+set background=dark
+set modelines=0
+"colorscheme solarized
+set showmode
+set showcmd
+set ignorecase
+set mouse=a
+set ruler
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set clipboard=unnamedplus
+set listchars=tab:▸\ ,eol:¬
+set visualbell
