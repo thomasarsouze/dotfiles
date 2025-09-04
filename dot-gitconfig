@@ -10,6 +10,7 @@
 	rebase = true
 [core]
 	editor = vi
+    pager = delta
 [push]
 	followtags = true
 [merge]
@@ -32,3 +33,20 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
+
+
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    side-by-side = true
+
+
+    # delta detects terminal colors automatically; set one of these to disable auto-detection
+    # dark = true
+    # light = true
+
+[diff]
+    colorMoved = default
