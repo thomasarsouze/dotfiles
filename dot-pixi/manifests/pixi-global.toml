@@ -68,3 +68,8 @@ exposed = { pandoc = "pandoc", pandoc-lua = "pandoc-lua", pandoc-server = "pando
 [envs.pyflowchart]
 channels = ["conda-forge"]
 dependencies = { pyflowchart = "*" }
+
+[envs.lazygit]
+channels = ["conda-forge"]
+dependencies = { lazygit = "*" }
+exposed = { lazygit = "lazygit" }
