@@ -116,6 +116,12 @@ source ~/.fzf_functions.sh
 # User configuration
 autoload zmv
 
+# tmux Ctrl-f binding for fzf
+bindkey -s ^f "tmux-sessionizer\n"
+
+export PATH="$PATH:$HOME/.local/scripts"
+
+
 # carapace-bin
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
@@ -133,7 +139,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-alias zshrc='vi ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
+alias zshrc='nvim ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 
 alias -g marker_single="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker_single --batch_multiplier 2"
 alias -g marker="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker"
@@ -240,6 +246,7 @@ export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH:
 
 alias fabric='fabric-ai'
+export PATH=$PATH:/Users/arsouze/Documents/Codes_divers/yt-dlp
 
 #****************************************************
 
@@ -321,7 +328,7 @@ for pattern_file in ~/.config/fabric/patterns/*; do
     $pattern_name() {
         local title=\$1
         local date_stamp=\$(date +'%Y-%m-%d')
-        local output_path=\"\$logseq_base/@\${title}-\${date_stamp}.md\"
+        local output_path=\"\$logseq_base/Youtube@\${title}-\${date_stamp}.md\"
 
         # Check if a title was provided
         if [ -n \"\$title\" ]; then
