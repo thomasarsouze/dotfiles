@@ -2,10 +2,8 @@ return {
 
   { -- for lsp features in code cells / embedded code
     'jmbuhr/otter.nvim',
-    dev = false,
     dependencies = {
       {
-        'neovim/nvim-lspconfig',
         'nvim-treesitter/nvim-treesitter',
       },
     },
@@ -51,7 +49,7 @@ return {
           'css-lsp',
           'html-lsp',
           'json-lsp',
-          -- 'haskell-language-server',
+          'haskell-language-server',
           'pyright',
           'r-languageserver',
           'texlab',
@@ -59,6 +57,7 @@ return {
           'svelte-language-server',
           'typescript-language-server',
           'yaml-language-server',
+          'gh-actions-language-server',
           'clangd',
           'css-lsp',
           'emmet-ls',
