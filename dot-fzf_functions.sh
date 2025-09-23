@@ -96,7 +96,7 @@ function fex() {
     return 0
   fi
 
-  local EDITOR=zed
+  local EDITOR=nvim
   # if selection is a folder (with multiples go to the first)
   if [ -d $selection ]; then
     cd "$selection" || exit
@@ -106,13 +106,13 @@ function fex() {
   fi
 }
 
-# ripgrep->fzf->zed [QUERY]
+# ripgrep->fzf->nvim [QUERY]
 grepex() (
   RELOAD='reload:rg --column --line-number --no-heading --color=always --smart-case {q} || :'
   OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-            zed {1} #+{2}     # No selection. Open the current line in zed.
+            nvim {1} #+{2}     # No selection. Open the current line in nvim.
           else
-            cat {+f} | sed "s/\(:.*\)//" | xargs zed # Build quickfix list for the selected items.
+            cat {+f} | sed "s/\(:.*\)//" | xargs nvim # Build quickfix list for the selected items.
           fi'
   fzf --disabled --ansi --highlight-line --multi \
       --bind "start:$RELOAD" --bind "change:$RELOAD" \
