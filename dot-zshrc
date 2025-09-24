@@ -133,7 +133,7 @@ alias l='ls -lFh'
 alias lsr='ls -lrt'
 alias t='tail -f'
 alias topu='top -U ${USER}'
-alias e="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias e="eza --color=always --long --git --icons=always --no-user --no-permissions"
 
 alias rm='rm -i'
 alias cp='cp -i'
