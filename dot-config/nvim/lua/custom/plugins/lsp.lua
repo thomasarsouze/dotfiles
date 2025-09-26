@@ -79,25 +79,6 @@ return {
         },
       }
 
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-        callback = function(event)
-          local function map(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
-
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          assert(client, 'LSP client not found')
-
-          ---@diagnostic disable-next-line: inject-field
-          client.server_capabilities.document_formatting = true
-
-          map('gd', vim.lsp.buf.definition, '[g]o to [d]efinition')
-          map('gD', vim.lsp.buf.type_definition, '[g]o to type [D]efinition')
-          map('<leader>lq', vim.diagnostic.setqflist, '[l]sp diagnostic [q]uickfix')
-        end,
-      })
-
       local lsp_flags = {
         allow_incremental_sync = true,
         debounce_text_changes = 150,

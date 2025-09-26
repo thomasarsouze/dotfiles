@@ -23,15 +23,8 @@ local cmap = function(key, effect, desc)
   vim.keymap.set('c', key, effect, { silent = true, noremap = true, desc = desc })
 end
 
--- select last paste
 nmap('gV', '`[v`]')
-
--- move in command line
 cmap('<C-a>', '<Home>')
-
--- save with ctrl+s
-imap('<C-s>', '<esc>:update<cr><esc>')
-nmap('<C-s>', '<cmd>:update<cr><esc>')
 
 --- Send code to terminal with vim-slime
 --- If an R terminal has been opend, this is in r_mode
@@ -123,14 +116,15 @@ local function show_r_table()
   vim.cmd(cmd)
 end
 
+
+vmap('<leader>d', '"_d', '[d]elete without overwriting registry')
+vmap('<leader>p', '"_dP', 'replace without overwriting registry')
+vmap('<leader>y', '"+y', '[y]ank to system clipboard')
+nmap('<leader>Y', '"+Y', '[Y]ank from cursor to end of the line to system clipboard')
+nmap('<leader>s', [[%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], '[s]ubsitute current word')
 -- keep selection after indent/dedent
 vmap('>', '>gv')
 vmap('<', '<gv')
-
--- center after search and jumps
-nmap('n', 'nzz')
-nmap('<c-d>', '<c-d>zz')
-nmap('<c-u>', '<c-u>zz')
 
 -- move between splits and tabs
 nmap('<c-h>', '<c-w>h')
@@ -205,17 +199,19 @@ wk.add({
   { '<c-LeftMouse>', '<cmd>lua vim.lsp.buf.definition()<CR>', desc = 'go to definition' },
   { '<c-q>', '<cmd>q<cr>', desc = 'close buffer' },
   { '<cm-i>', insert_py_chunk, desc = 'python code chunk' },
-  { '<esc>', '<cmd>noh<cr>', desc = 'remove search highlight' },
   { '<m-I>', insert_py_chunk, desc = 'python code chunk' },
   { '<m-i>', insert_r_chunk, desc = 'r code chunk' },
-  { '[q', ':silent cprev<cr>', desc = '[q]uickfix prev' },
-  { ']q', ':silent cnext<cr>', desc = '[q]uickfix next' },
-  { 'gN', 'Nzzzv', desc = 'center search' },
+  { '<C-j>', '<cmd>cprev<CR>zz', desc = '[q]uickfix previous' },
+  { '<C-k>', '<cmd>cnext<CR>zz', desc = '[q]uickfix next' },
   { 'gf', ':e <cfile><CR>', desc = 'edit file' },
   { 'gl', '<c-]>', desc = 'open help link' },
-  { 'n', 'nzzzv', desc = 'center search' },
+  { 'N', 'Nzzzv', desc = 'center previous matching search' },
+  { 'n', 'nzzzv', desc = 'center next matching search' },
   { 'z?', ':setlocal spell!<cr>', desc = 'toggle [z]pellcheck' },
   { 'zl', ':Telescope spell_suggest<cr>', desc = '[l]ist spelling suggestions' },
+  { '<C-u>', '<C-u>zz', desc = 'conter half page up' },
+  { '<C-d>', '<C-d>zz', desc = 'center half page down' },
+  { 'J', 'mzJ`z', desc = 'join current line with the next one and keep cursor position' },
 }, { mode = 'n', silent = true })
 
 -- visual mode
@@ -223,6 +219,8 @@ wk.add {
   {
     mode = { 'v' },
     { '.', ':norm .<cr>', desc = 'repat last normal mode command' },
+    { 'J', ":m '>+1<CR>gv=gv", desc = 'move selection line down' }, 
+    { 'K', ":m '<-2<CR>gv=gv", desc = 'move selection line up' }, 
     { '<M-j>', ":m'>+<cr>`<my`>mzgv`yo`z", desc = 'move line down' },
     { '<M-k>', ":m'<-2<cr>`>my`<mzgv`yo`z", desc = 'move line up' },
     { '<cr>', send_region, desc = 'run code region' },
@@ -230,24 +228,25 @@ wk.add {
   },
 }
 
--- visual with <leader>
-wk.add({
-  { '<leader>d', '"_d', desc = 'delete without overwriting reg', mode = 'v' },
-  { '<leader>p', '"_dP', desc = 'replace without overwriting reg', mode = 'v' },
-}, { mode = 'v' })
-
 -- insert mode
 wk.add({
   {
     mode = { 'i' },
     { '<c-x><c-x>', '<c-x><c-o>', desc = 'omnifunc completion' },
     { '<cm-i>', insert_py_chunk, desc = 'python code chunk' },
-    { '<m-->', ' <- ', desc = 'assign' },
     { '<m-I>', insert_py_chunk, desc = 'python code chunk' },
     { '<m-i>', insert_r_chunk, desc = 'r code chunk' },
-    { '<m-m>', ' |>', desc = 'pipe' },
   },
 }, { mode = 'i' })
+
+wk.add({
+    { 
+	'<leader><leader>', 
+	function()
+		vim.cmd("so")
+	end, 
+	desc = 'source the configuration file', mode = 'n'},
+})
 
 local function new_terminal(lang)
   vim.cmd('vsplit term://' .. lang)
@@ -306,8 +305,8 @@ end
 
 wk.add({
   {
-    { '<leader><cr>', send_cell, desc = 'run code cell' },
     { '<leader>c', group = '[c]ode / [c]ell / [c]hunk' },
+    { '<leader><cr>', send_cell, desc = 'run code cell' },
     { '<leader>ci', new_terminal_ipython, desc = 'new [i]python terminal' },
     { '<leader>cj', new_terminal_julia, desc = 'new [j]ulia terminal' },
     { '<leader>cn', new_terminal_shell, desc = '[n]ew terminal with shell' },
@@ -317,12 +316,12 @@ wk.add({
     { '<leader>dt', group = '[t]est' },
     { '<leader>e', group = '[e]dit' },
     { '<leader>e', group = '[t]mux' },
-    { '<leader>fd', [[eval "$(tmux showenv -s DISPLAY)"]], desc = '[d]isplay fix' },
+
     { '<leader>f', group = '[f]ind (telescope)' },
-    { '<leader>f<space>', '<cmd>Telescope buffers<cr>', desc = '[ ] buffers' },
+    { '<leader>fd', [[eval "$(tmux showenv -s DISPLAY)"]], desc = '[d]isplay fix' },
     { '<leader>fM', '<cmd>Telescope man_pages<cr>', desc = '[M]an pages' },
     { '<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<cr>', desc = '[b]uffer fuzzy find' },
-    { '<leader>fc', '<cmd>Telescope git_commits<cr>', desc = 'git [c]ommits' },
+    { '<leader>fr', '<cmd>Telescope oldfiles<CR>', desc = '[r]ecent files' },
     { '<leader>fd', '<cmd>Telescope buffers<cr>', desc = '[d] buffers' },
     { '<leader>ff', '<cmd>Telescope find_files<cr>', desc = '[f]iles' },
     { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = '[g]rep' },
@@ -332,6 +331,8 @@ wk.add({
     { '<leader>fl', '<cmd>Telescope loclist<cr>', desc = '[l]oclist' },
     { '<leader>fm', '<cmd>Telescope marks<cr>', desc = '[m]arks' },
     { '<leader>fq', '<cmd>Telescope quickfix<cr>', desc = '[q]uickfix' },
+
+    { '<leader>gw', group = '[g]it [w]orktree' },
     {
       '<leader>gwc',
       ":lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
@@ -343,11 +344,9 @@ wk.add({
       desc = 'worktree switch',
     },
     { '<leader>h', group = '[h]elp / [h]ide / debug' },
-    { '<leader>hc', group = '[c]onceal' },
     { '<leader>hc', toggle_conceal, desc = '[c]onceal toggle' },
-    { '<leader>ht', group = '[t]reesitter' },
-    { '<leader>htt', vim.treesitter.inspect_tree, desc = 'show [t]ree' },
-    { '<leader>i', group = '[i]mage' },
+    { '<leader>ht', vim.treesitter.inspect_tree, desc = 'show [t]ree' },
+
     { '<leader>l', group = '[l]anguage/lsp' },
     { '<leader>ld', group = '[d]iagnostics' },
     {
@@ -359,6 +358,7 @@ wk.add({
     },
     { '<leader>lde', vim.diagnostic.enable, desc = '[e]nable' },
     { '<leader>le', vim.diagnostic.open_float, desc = 'diagnostics (show hover [e]rror)' },
+
     { '<leader>o', group = '[o]tter & c[o]de' },
     { '<leader>oa', require('otter').activate, desc = 'otter [a]ctivate' },
     { '<leader>ob', insert_bash_chunk, desc = '[b]ash code chunk' },
@@ -369,6 +369,7 @@ wk.add({
     { '<leader>oo', insert_ojs_chunk, desc = '[o]bservable js code chunk' },
     { '<leader>op', insert_py_chunk, desc = '[p]ython code chunk' },
     { '<leader>or', insert_r_chunk, desc = '[r] code chunk' },
+
     { '<leader>q', group = '[q]uarto' },
     {
       '<leader>qE',
@@ -387,15 +388,12 @@ wk.add({
     { '<leader>qra', ':QuartoSendAll<cr>', desc = 'run [a]ll' },
     { '<leader>qrb', ':QuartoSendBelow<cr>', desc = 'run [b]elow' },
     { '<leader>qrr', ':QuartoSendAbove<cr>', desc = 'to cu[r]sor' },
+
     { '<leader>r', group = '[r] R specific tools' },
     { '<leader>rt', show_r_table, desc = 'show [t]able' },
-    { '<leader>v', group = '[v]im' },
-    { '<leader>vc', ':Telescope colorscheme<cr>', desc = '[c]olortheme' },
-    { '<leader>vh', ':execute "h " . expand("<cword>")<cr>', desc = 'vim [h]elp for current word' },
-    { '<leader>vl', ':Lazy<cr>', desc = '[l]azy package manager' },
-    { '<leader>vm', ':Mason<cr>', desc = '[m]ason software installer' },
-    { '<leader>vs', ':e $MYVIMRC | :cd %:p:h | split . | wincmd k<cr>', desc = '[s]ettings, edit vimrc' },
+
     { '<leader>vt', toggle_light_dark_theme, desc = '[t]oggle light/dark theme' },
+    { 'lg', '<cmd>LazyGit<cr>', desc = '[l]azy[g]it' },
     { '<leader>x', group = 'e[x]ecute' },
     { '<leader>xx', ':w<cr>:source %<cr>', desc = '[x] source %' },
   },

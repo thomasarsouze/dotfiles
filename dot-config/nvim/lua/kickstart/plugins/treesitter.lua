@@ -15,6 +15,7 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
         auto_install = true,
+        sync_install = false,
         ensure_installed = {
           'r',
           'python',
