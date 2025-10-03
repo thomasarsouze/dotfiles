@@ -116,12 +116,11 @@ local function show_r_table()
   vim.cmd(cmd)
 end
 
-
 vmap('<leader>d', '"_d', '[d]elete without overwriting registry')
 vmap('<leader>p', '"_dP', 'replace without overwriting registry')
 vmap('<leader>y', '"+y', '[y]ank to system clipboard')
 nmap('<leader>Y', '"+Y', '[Y]ank from cursor to end of the line to system clipboard')
-nmap('<leader>s', [[%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], '[s]ubsitute current word')
+nmap('<leader>r', [[%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], '[r]eplace current word')
 -- keep selection after indent/dedent
 vmap('>', '>gv')
 vmap('<', '<gv')
@@ -219,8 +218,8 @@ wk.add {
   {
     mode = { 'v' },
     { '.', ':norm .<cr>', desc = 'repat last normal mode command' },
-    { 'J', ":m '>+1<CR>gv=gv", desc = 'move selection line down' }, 
-    { 'K', ":m '<-2<CR>gv=gv", desc = 'move selection line up' }, 
+    { 'J', ":m '>+1<CR>gv=gv", desc = 'move selection line down' },
+    { 'K', ":m '<-2<CR>gv=gv", desc = 'move selection line up' },
     { '<M-j>', ":m'>+<cr>`<my`>mzgv`yo`z", desc = 'move line down' },
     { '<M-k>', ":m'<-2<cr>`>my`<mzgv`yo`z", desc = 'move line up' },
     { '<cr>', send_region, desc = 'run code region' },
@@ -238,15 +237,6 @@ wk.add({
     { '<m-i>', insert_r_chunk, desc = 'r code chunk' },
   },
 }, { mode = 'i' })
-
-wk.add({
-    { 
-	'<leader><leader>', 
-	function()
-		vim.cmd("so")
-	end, 
-	desc = 'source the configuration file', mode = 'n'},
-})
 
 local function new_terminal(lang)
   vim.cmd('vsplit term://' .. lang)
@@ -388,9 +378,6 @@ wk.add({
     { '<leader>qra', ':QuartoSendAll<cr>', desc = 'run [a]ll' },
     { '<leader>qrb', ':QuartoSendBelow<cr>', desc = 'run [b]elow' },
     { '<leader>qrr', ':QuartoSendAbove<cr>', desc = 'to cu[r]sor' },
-
-    { '<leader>r', group = '[r] R specific tools' },
-    { '<leader>rt', show_r_table, desc = 'show [t]able' },
 
     { '<leader>vt', toggle_light_dark_theme, desc = '[t]oggle light/dark theme' },
     { 'lg', '<cmd>LazyGit<cr>', desc = '[l]azy[g]it' },
