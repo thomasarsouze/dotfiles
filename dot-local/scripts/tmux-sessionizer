@@ -2,36 +2,36 @@
 
 # 1. Select directory
 if [[ $# -eq 1 ]]; then
-    selected=$1
+  selected=$1
 else
-    selected=$(find ~/Documents/Modeles/Codes/OpenAlea/	~/Documents/Modeles/Codes ~/Documents/Informatique/POLIS/ ~/Documents/Codes_divers ~/Documents/Modeles/Simulation ~/Documents/Modeles/Outils ~/Documents/Modeles/Documentation -mindepth 1 -maxdepth 1 -type d | fzf)
+  selected=$(find ~/Documents/Modeles/Codes/OpenAlea/ ~/Documents/Modeles/Codes ~/Documents/Informatique/POLIS/ ~/Documents/Codes_divers ~/Documents/Modeles/Simulations ~/Documents/Modeles/Outils ~/Documents/Modeles/Documentation -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 # 2. Exit if no selection
 if [[ -z $selected ]]; then
-    exit 0
+  exit 0
 fi
 
 # 3. Prepare session name
-selected_name=$(basename "$selected" | tr . _)
+selected_name=$((basename $(dirname $selected)_$(basename $selected)) | tr . _)
 tmux_running=$(pgrep tmux)
 
 # 4. If tmux is not running at all, create new session and windows
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected -d   # create new session and detach
-    tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim'   # create new window for nvim
-    tmux select-window -t "$selected_name:0"   # select the shell window
-    tmux attach-session -t "$selected_name"   # attach to the session
-    exit 0
+  tmux new-session -s $selected_name -c $selected -d                     # create new session and detach
+  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim' # create new window for nvim
+  tmux select-window -t "$selected_name:0"                               # select the shell window
+  tmux attach-session -t "$selected_name"                                # attach to the session
+  exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-    tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim'
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
+  tmux new-session -ds $selected_name -c $selected
+  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim'
 fi
 
 if [[ -z $TMUX ]]; then
-    tmux attach -t $selected_name
+  tmux attach -t $selected_name
 else
-    tmux switch-client -t $selected_name
+  tmux switch-client -t $selected_name
 fi
