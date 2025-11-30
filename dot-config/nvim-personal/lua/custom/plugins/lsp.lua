@@ -42,7 +42,7 @@ return {
       local lspconfig = require 'lspconfig'
       local util = require 'lspconfig.util'
 
-      require('mason').setup {
+      require('dot-config.nvim.lua.plugins.mason').setup {
         ensure_installed = {
           'lua-language-server',
           'bash-language-server',

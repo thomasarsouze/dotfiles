@@ -73,3 +73,13 @@ dependencies = { pyflowchart = "*" }
 channels = ["conda-forge"]
 dependencies = { lazygit = "*" }
 exposed = { lazygit = "lazygit" }
+
+[envs.black]
+channels = ["conda-forge"]
+dependencies = { black = "*" }
+exposed = { black = "black", blackd = "blackd" }
+
+[envs.pynvim]
+channels = ["conda-forge"]
+dependencies = { pynvim = "*" }
+exposed = { pynvim-python = "pynvim-python" }
