@@ -375,8 +375,8 @@ return {
         keymaps = {
           toggle_repl = "<space>ir", -- toggles the repl open and closed.
           -- If repl_open_command is a table, then:
-          toggle_repl_with_cmd_1 = "<space>rv",
-          toggle_repl_with_cmd_2 = "<space>rh",
+          toggle_repl_with_cmd_1 = "<space>irv",
+          toggle_repl_with_cmd_2 = "<space>irh",
           restart_repl = "<space>iR", -- calls `IronRestart` to restart the repl
 
           -- send keymaps (<leader>is prefix currently):
