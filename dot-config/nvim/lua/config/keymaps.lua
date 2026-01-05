@@ -2,6 +2,9 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- Exit insert mode
+vim.keymap.set("i", "jj", "<ESC>", { silent = true })
+
 -- Esc to exit terminal mode
 vim.keymap.set("t", "<esc>", "<C-\\><C-n>", { desc = "exit terminal" }) -- that way Esc in terminal mode allows exiting to normal mode, I hate doing ctrl-\,ctrl-n to do that
 
