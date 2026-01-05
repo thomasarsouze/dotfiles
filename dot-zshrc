@@ -1,3 +1,8 @@
+# Launch tmux first
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -A -s workspace
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -98,12 +103,12 @@ plugins=(git
         copypath
         dircycle
         cp
-        fzf-tab
         fast-syntax-highlighting
         extract
         web-search
         autojump
         k
+###        fzf-tab
         zsh-bat
         zsh-autosuggestions
         zsh-syntax-highlighting
@@ -116,7 +121,7 @@ source ~/.fzf_functions.sh
 # User configuration
 autoload zmv
 
-# tmux Ctrl-f binding for fzf
+# tmux Ctrl-f binding for fzf for sessionizer
 bindkey -s ^f "tmux-sessionizer\n"
 
 export PATH="$PATH:$HOME/.local/scripts"
@@ -371,3 +376,4 @@ yt() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 . "/Users/arsouze/.deno/env"
+export PATH="/usr/local/sbin:$PATH"
