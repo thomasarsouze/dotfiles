@@ -4,7 +4,7 @@
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/Documents/Modeles/Codes/OpenAlea/ ~/Documents/Modeles/Codes ~/Documents/Informatique/POLIS/ ~/Documents/Codes_divers ~/Documents/Modeles/Simulations ~/Documents/Modeles/Outils ~/Documents/Modeles/Documentation -mindepth 1 -maxdepth 1 -type d | fzf)
+  selected=$(find ~/Documents/Perso/ ~/Documents/Codes_divers/ ~/Documents/MaCS4Plants/ ~/Documents/Modeles/Codes/ ~/Documents/Modeles/Codes/OpenAlea/ ~/Documents/Modeles/Simulations/ ~/Documents/Formations/ -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 # 2. Exit if no selection
