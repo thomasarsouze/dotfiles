@@ -7,7 +7,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", path = 2, shortening_target = 80 },
+          lualine_c = { "filename" },
           lualine_x = {
             {
               function()
