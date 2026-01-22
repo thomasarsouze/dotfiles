@@ -38,3 +38,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- scroll in insert mode
 vim.keymap.set("i", "<C-E>", "<C-X><C-E>", { silent = true })
 vim.keymap.set("i", "<C-Y>", "<C-X><C-Y>", { silent = true })
+
+-- resize window
+vim.keymap.set("n", "<C-+>", [[<cmd>vertical resize +5<cr>]]) -- agrandit la fenêtre verticalement
+vim.keymap.set("n", "<C-->", [[<cmd>vertical resize -5<cr>]]) -- réduit la taille de la fenêtre verticalement
+vim.keymap.set("n", "<C->>", [[<cmd>horizontal resize +2<cr>]]) -- agrandit la fenêtre horizontalement en appuyant sur Shift et =
+vim.keymap.set("n", "<C-<>", [[<cmd>horizontal resize -2<cr>]]) -- réduit la taille de la fenêtre horizontalement en appuyant sur Shift et -
