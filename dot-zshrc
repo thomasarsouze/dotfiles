@@ -3,6 +3,9 @@ if [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
 
+# Needed for gpg,
+export GPG_TTY=$(tty)
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -132,10 +135,14 @@ export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
 
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -lFh'
-alias lsr='ls -lrt'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias ll='eza --icons -alF' #'ls -alF'
+alias la='eza --icons -A' #ls -A'
+alias l='eza --icons -lFh' #'ls -lFh'
+alias lsr='eza --icons --sort changed -l' #'ls -lrt'
 alias t='tail -f'
 alias topu='top -U ${USER}'
 alias e="eza --color=always --long --git --icons=always --no-user --no-permissions"
@@ -145,6 +152,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 alias zshrc='nvim ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
+alias szshrc='source ${ZDOTDIR:-$HOME}/.zshrc'
+alis nv="nvim"
 
 alias -g marker_single="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker_single --batch_multiplier 2"
 alias -g marker="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker"
@@ -377,3 +386,5 @@ yt() {
 
 . "/Users/arsouze/.deno/env"
 export PATH="/usr/local/sbin:$PATH"
+
+source /Users/arsouze/.docker/init-zsh.sh || true # Added by Docker Desktop
