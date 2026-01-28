@@ -1,0 +1,13 @@
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "bennyyip/gruvbox-dark"
+rev = "619fdc5"
+hash = "d4c7003ec6dc4efd5d3a050d5c2f2575"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:jump-to-char"
+rev = "e07bf41"
+hash = "ce67445ebb1bf3d97b8e44f50904b2c5"
+

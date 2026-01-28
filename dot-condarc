@@ -4,3 +4,4 @@ channels:
   - conda-forge
 solver: libmamba
 channel_priority: strict
+ssl_verify: /Users/arsouze/.conda/certif/Fortinet_CA_SSL.crt

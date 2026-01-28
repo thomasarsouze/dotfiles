@@ -111,7 +111,7 @@ plugins=(git
         web-search
         autojump
         k
-###        fzf-tab
+        fzf-tab
         zsh-bat
         zsh-autosuggestions
         zsh-syntax-highlighting
@@ -153,7 +153,7 @@ alias mv='mv -i'
 
 alias zshrc='nvim ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias szshrc='source ${ZDOTDIR:-$HOME}/.zshrc'
-alis nv="nvim"
+alias nv="nvim"
 
 alias -g marker_single="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker_single --batch_multiplier 2"
 alias -g marker="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker"
@@ -195,6 +195,14 @@ function sk() {
 # ipython-like R interpreter
 alias r="radian"
 
+# yazi function to allow change directory
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 # Java 1.8 as default
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8.0_202)
