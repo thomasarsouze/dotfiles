@@ -219,6 +219,9 @@ alias bsc_vpn='sudo openfortivpn gw.bsc.es:443 --username=tarsouze --trusted-cer
 # Quarto
 export QUARTO_PYTHON='/Users/arsouze/miniconda3/bin/python'
 
+# EDITOR 
+export EDITOR=nvim
+
 # Unknown QT need
 export QT_MAC_WANTS_LAYER=1
 
