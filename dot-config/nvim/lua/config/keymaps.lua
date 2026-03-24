@@ -23,7 +23,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- in visual mode, does NOT overwrite your clipboard and paste the content of clipboard
-vim.keymap.set("x", "<leader>p", [["_dP]])
+--vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
 
 -- don't put deleted selection to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')

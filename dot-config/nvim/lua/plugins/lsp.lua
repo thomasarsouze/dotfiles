@@ -1,31 +1,38 @@
 return {
-  -- Pyright configuration
   {
     "neovim/nvim-lspconfig", -- The plugin you're using for LSPs
-    config = function()
-      -- Pyright setup
-      require("lspconfig").pyright.setup({
-        settings = {
-          pyright = {
-            disableorganizeimports = true,
-          },
-          python = {
-            analysis = {
-              ignore = { "*" }, -- Disable analysis to use ruff for linting
+    opts = {
+      servers = {
+        -- Python
+        pyright = {
+          settings = {
+            -- Pyright configuration
+            pyright = {
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                ignore = { "*" },
+              },
             },
           },
         },
-      })
 
-      -- Ruff LSP setup
-      require("lspconfig").ruff.setup({
-        init_options = {
-          settings = {
-            -- Add ruff-specific settings here if necessary
+        ruff = {
+          init_options = {
+            settings = {},
           },
         },
-      })
-    end,
+
+        r_language_server = {
+          cmd = { "R", "--slave", "-e", "languageserver::run()" },
+        },
+
+        marksman = {},
+
+        julials = {},
+      },
+    },
   },
 }
 
