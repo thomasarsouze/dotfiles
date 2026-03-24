@@ -3,6 +3,9 @@ if [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
 
+# For cht.sh
+fpath=(~/.zsh.d/ $fpath)
+
 # Needed for gpg,
 export GPG_TTY=$(tty)
 
