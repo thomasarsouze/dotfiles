@@ -1,0 +1,27 @@
+[metadata]
+name = "conda"
+description = "List and manage conda / mamba environments"
+requirements = ["mamba", "conda"]
+
+[source]
+command = ["mamba env list | awk 'NR>2 && $1 != \"\" {print $1}'"]
+
+[preview]
+command = "mamba list -n '{}'"
+
+[ui]
+layout = "landscape"
+
+[keybindings]
+ctrl-e = "actions:activate"
+ctrl-d = "actions:remove"
+
+[actions.activate]
+description = "Upgrade the selected package"
+command = "mamba activate '{}'"
+mode = "execute"
+
+[actions.remove]
+description = "Remove the whole environment"
+command = "mamba remove '{}' --all -y"
+mode = "execute"

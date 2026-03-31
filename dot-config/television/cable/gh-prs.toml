@@ -1,0 +1,82 @@
+[metadata]
+name = "gh-prs"
+description = "List GitHub PRs for the current repo"
+requirements = ["gh", "jq"]
+
+[source]
+command = [
+  '''gh pr list --state open --limit 100 --json number,title,createdAt,author,labels | jq -r 'sort_by(.createdAt) | reverse | .[] | "  \u001b[32m#\(.number)\u001b[39m   \(.title) \u001b[33m@\(.author.login)\u001b[39m" + (if (.labels | length) > 0 then " " + ([.labels[] | "\u001b[35m" + .name + "\u001b[39m"] | join(" ")) else "" end)'
+''',
+  '''gh pr list --state all --limit 100 --json number,title,createdAt,author,labels | jq -r 'sort_by(.createdAt) | reverse | .[] | "  \u001b[32m#\(.number)\u001b[39m   \(.title) \u001b[33m@\(.author.login)\u001b[39m" + (if (.labels | length) > 0 then " " + ([.labels[] | "\u001b[35m" + .name + "\u001b[39m"] | join(" ")) else "" end)'
+''',
+]
+output = '{strip_ansi|split:#:1|split:   :0}'
+ansi = true
+
+[ui]
+layout = "landscape"
+
+[preview]
+command = [
+  '''gh pr view '{strip_ansi|split:#:1|split:   :0}' --json number,title,body,state,headRefName,baseRefName,author,createdAt,updatedAt,mergeable,changedFiles,additions,deletions,labels,assignees,reviewDecision,headRepository,headRepositoryOwner,comments,reviews | jq -r '
+"  " + .title,
+"  #" + (.number | tostring),
+"",
+"  \u001b[36mStatus:\u001b[39m \u001b[32m" + .state + "\u001b[39m  " + .baseRefName + " ← " + .headRefName,
+"  \u001b[36mRepo:\u001b[39m \u001b[34m" + (.headRepositoryOwner.login) + "/" + (.headRepository.name) + "\u001b[39m",
+"  \u001b[36mAuthor:\u001b[39m \u001b[33m" + .author.login + "\u001b[39m",
+"",
+"  \u001b[90m────────────────────────────────────────────────────────────\u001b[39m",
+"",
+"  \u001b[1mDescription\u001b[0m",
+"",
+(.body // ""),
+"",
+"  \u001b[90m────────────────────────────────────────────────────────────\u001b[39m",
+"",
+"  \u001b[1mComments\u001b[0m",
+"",
+(
+  .comments[]? |
+  "  \u001b[33m" + .author.login + "\u001b[39m"
+  + " \u001b[90m(" + .createdAt + ")\u001b[39m\n"
+  + (.body // "") + "\n\n"
+),
+"",
+"  \u001b[90m────────────────────────────────────────────────────────────\u001b[39m",
+"",
+"  \u001b[1mReviews\u001b[0m",
+"",
+(
+  .reviews[]? |
+  "  \u001b[35m" + .author.login + "\u001b[39m"
+  + " [" + .state + "]\n"
+  + (.body // "") + "\n\n"
+)'
+''',
+  "gh pr view '{strip_ansi|split:#:1|split:   :0}' --json files | jq -r '.files[].path'",
+  "gh pr diff '{strip_ansi|split:#:1|split:   :0}'",
+]
+
+[keybindings]
+enter = "actions:open"
+
+[actions.open]
+description = "Open the PR in the browser"
+command = "gh pr view {strip_ansi|split:#:1|split:   :0} --web"
+mode = "execute"
+
+[actions.checkout]
+description = "Checkout the PR branch locally"
+command = "gh pr checkout {strip_ansi|split:#:1|split:   :0}"
+mode = "execute"
+
+[actions.merge]
+description = "Merge the selected PR"
+command = "gh pr merge {strip_ansi|split:#:1|split:   :0}"
+mode = "execute"
+
+[actions.diff]
+description = "View the PR diff"
+command = "gh pr diff {strip_ansi|split:#:1|split:   :0} | less"
+mode = "execute"

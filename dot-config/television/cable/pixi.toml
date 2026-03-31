@@ -1,0 +1,29 @@
+[metadata]
+name = "pixi"
+description = "List and manage pixi global installs"
+requirements = ["pixi"]
+
+[source]
+command = ["pixi global list | grep -E '^[├└]──' | sed 's/^[├└]── //' "]
+display = "{split:::0} ({split:::1})"
+output = "{split:::0}"
+
+[preview]
+command = "pixi global list --environment '{split:::0}'"
+
+[ui]
+layout = "landscape"
+
+[keybindings]
+ctrl-u = "actions:updade"
+ctrl-d = "actions:uninstall"
+
+[actions.updade]
+description = "Updade the selected global environment"
+command = "pixi global update '{split:::0}'"
+mode = "execute"
+
+[actions.uninstall]
+description = "Uninstall the selected global environment"
+command = "pixi global uninstall '{split:::0}'"
+mode = "execute"
