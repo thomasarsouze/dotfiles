@@ -13,15 +13,16 @@ command = "mamba list -n '{}'"
 layout = "landscape"
 
 [keybindings]
+enter = "actions:activate"
 ctrl-e = "actions:activate"
 ctrl-d = "actions:remove"
 
 [actions.activate]
-description = "Upgrade the selected package"
-command = "mamba activate '{}'"
+description = "Activate the selected environment in a new shell"
+command = "tmux send-keys C-u 'mamba activate {}' Enter"
 mode = "execute"
 
 [actions.remove]
 description = "Remove the whole environment"
-command = "mamba remove '{}' --all -y"
+command = "tmux send-keys C-u 'mamba remove {}' --all -y"
 mode = "execute"

@@ -243,7 +243,7 @@ fallback_channel = "files"
 "git-log" = ["git log", "git show"]
 "docker-images" = ["docker run"]
 "git-repos" = ["nvim", "code", "hx", "git clone"]
-
+"conda" = ["mamba activate", "conda activate"]
 
 [shell_integration.keybindings]
 # controls which key binding should trigger tv

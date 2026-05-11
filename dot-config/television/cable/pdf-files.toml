@@ -1,0 +1,24 @@
+[metadata]
+name = "pdf"
+description = "Browse PDF files"
+requirements = ["fd", "pdftotext", "realpath"]
+
+[source]
+command = [
+  "fd -t f -e pdf --absolute-path . ",
+  "fd -t f -e pdf -H --absolute-path . ",
+]
+
+[preview]
+command = "pdftotext -l 2 -layout '{}' - 2>/dev/null | head -200 || file '{}'"
+
+[ui]
+layout = "portrait"
+
+[keybindings]
+enter = "actions:open"
+
+[actions.open]
+description = "Open the selected PDF with default viewer"
+command = "xdg-open '{}' 2>/dev/null || open '{}'"
+mode = "fork"
