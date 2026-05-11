@@ -14,6 +14,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Fix for tree-sitter
+vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/site")
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
@@ -29,6 +32,9 @@ require("lazy").setup({
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
+  },
+  rocks = {
+    enabled = false,
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
