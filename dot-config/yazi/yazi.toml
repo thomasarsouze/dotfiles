@@ -1,9 +1,18 @@
+[manager]
+show_hidden = true
+
 [[plugin.prepend_fetchers]]
-id  = "git"
+id = "git"
 url = "*"
 run = "git"
 
 [[plugin.prepend_fetchers]]
-id  = "git"
+id = "git"
 url = "*/"
 run = "git"
+
+[mgr]
+sort_by = "mtime"
+sort_reverse = true   # newest files first
+sort_dir_first = true # folders before files
+linemode = "size"
