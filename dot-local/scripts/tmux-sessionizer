@@ -19,7 +19,7 @@ tmux_running=$(pgrep tmux)
 # 4. If tmux is not running at all, create new session and windows
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
   tmux new-session -s $selected_name -c $selected -d                     # create new session and detach
-  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim' # create new window for nvim
+  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" "zsh -ic 'nvim; exec zsh'"  # create new window for nvim
   tmux select-window -t "$selected_name:0"                               # select the shell window
   tmux attach-session -t "$selected_name"                                # attach to the session
   exit 0
@@ -27,7 +27,7 @@ fi
 
 if ! tmux has-session -t=$selected_name 2>/dev/null; then
   tmux new-session -ds $selected_name -c $selected
-  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" 'nvim'
+  tmux new-window -t "$selected_name:" -n 'editor' -c "$selected" "zsh -ic 'nvim; exec zsh'"
 fi
 
 if [[ -z $TMUX ]]; then

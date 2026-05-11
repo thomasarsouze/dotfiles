@@ -88,3 +88,18 @@ exposed = { pynvim-python = "pynvim-python" }
 channels = ["conda-forge"]
 dependencies = { ghostscript = "*" }
 exposed = { gs = "gs", dvipdf = "dvipdf", eps2eps = "eps2eps", gsbj = "gsbj", gsdj = "gsdj", gsdj500 = "gsdj500", gslj = "gslj", gslp = "gslp", gsnd = "gsnd", lprsetup = "lprsetup", pdf2dsc = "pdf2dsc", pdf2ps = "pdf2ps", pf2afm = "pf2afm", pfbtopfa = "pfbtopfa", pphs = "pphs", printafm = "printafm", ps2ascii = "ps2ascii", ps2epsi = "ps2epsi", ps2pdf = "ps2pdf", ps2pdf12 = "ps2pdf12", ps2pdf13 = "ps2pdf13", ps2pdf14 = "ps2pdf14", ps2pdfwr = "ps2pdfwr", ps2ps = "ps2ps", ps2ps2 = "ps2ps2", unix-lpr = "unix-lpr" }
+
+[envs.jupytext]
+channels = ["conda-forge"]
+dependencies = { jupytext = "*" }
+exposed = { jupytext = "jupytext", jupytext-config = "jupytext-config" }
+
+[envs.markdown-toc]
+channels = ["conda-forge"]
+dependencies = { markdown-toc = "*" }
+exposed = { markdown-toc = "markdown-toc" }
+
+[envs.markdownlint-cli2]
+channels = ["conda-forge"]
+dependencies = { markdownlint-cli2 = "*" }
+exposed = { markdownlint-cli2 = "markdownlint-cli2" }
