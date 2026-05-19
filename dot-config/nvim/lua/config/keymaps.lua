@@ -24,13 +24,13 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- in visual mode, does NOT overwrite your clipboard and paste the content of clipboard
 --vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
+vim.keymap.set({ "n", "x" }, "<leader>p", [["0P]], { desc = "Paste from yank register" })
 
 -- don't put deleted selection to clipboard
-vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete, don't put to clipboard" })
 
 -- indent paragraph with cursor stays in place
-vim.keymap.set("n", "=ap", "ma=ap'a")
+vim.keymap.set("n", "=ap", "ma=ap'a", { desc = "Indent current paragraph, cursor in place" })
 
 -- next search keeps cursor centered
 vim.keymap.set("n", "n", "nzzzv")
