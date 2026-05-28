@@ -12,7 +12,7 @@ vim.keymap.set("i", "jj", "<ESC>", { silent = true })
 vim.keymap.set("t", "<esc>", "<C-\\><C-n>", { desc = "exit terminal" }) -- that way Esc in terminal mode allows exiting to normal mode, I hate doing ctrl-\,ctrl-n to do that
 
 -- source vim config
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>uv", ":source $HOME/.config/nvim/init.lua <CR>", { desc = "Source nvim config" })
 
 -- in visual mode, move selected line down or up
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
