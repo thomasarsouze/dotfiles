@@ -15,10 +15,10 @@ command = "pixi global list --environment '{split:::0}'"
 layout = "landscape"
 
 [keybindings]
-ctrl-u = "actions:updade"
+ctrl-u = "actions:update"
 ctrl-d = "actions:uninstall"
 
-[actions.updade]
+[actions.update]
 description = "Updade the selected global environment"
 command = "pixi global update '{split:::0}'"
 mode = "execute"

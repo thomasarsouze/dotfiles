@@ -1,0 +1,19 @@
+[metadata]
+name = "bookmarks"
+description = "Firefox bookmarks"
+
+[source]
+command = "~/.local/scripts/firefox-bookmarks"
+display = "{split:\t:0}"
+output = "{split:\t:1}"
+
+[preview]
+command = "echo '{split:\t:1}'"
+
+[keybindings]
+enter = "actions:open"
+
+[actions.open]
+description = "Open the selected bookmark"
+command = "open -a Firefox '{split:\t:1}'"
+mode = "execute"

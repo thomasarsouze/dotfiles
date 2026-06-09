@@ -17,8 +17,14 @@ layout = "portrait"
 
 [keybindings]
 enter = "actions:open"
+ctrl-c = "actions:copypath"
 
 [actions.open]
 description = "Open the selected PDF with default viewer"
 command = "xdg-open '{}' 2>/dev/null || open '{}'"
+mode = "fork"
+
+[actions.copypath]
+description = "Copy the path of the selected PDF to clipboard"
+command = "echo -n '{}' | pbcopy"
 mode = "fork"
