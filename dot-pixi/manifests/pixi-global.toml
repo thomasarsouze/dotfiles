@@ -81,7 +81,7 @@ exposed = { black = "black", blackd = "blackd" }
 
 [envs.pynvim]
 channels = ["conda-forge"]
-dependencies = { pynvim = "*" }
+dependencies = { pynvim = "*" , jupyter_client = "*" , cairosvg = "*", libpng = "*", plotly = "*", python-kaleido = "*", pyperclip = "*", nbformat = "*", pillow = "*" }
 exposed = { pynvim-python = "pynvim-python" }
 
 [envs.ghostscript]
