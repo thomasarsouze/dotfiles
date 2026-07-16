@@ -207,6 +207,8 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+alias ipython_autoreload='ipython --InteractiveShellApp.exec_lines="%load_ext autoreload" --InteractiveShellApp.exec_lines="%autoreload 2"'
+
 # Java 1.8 as default
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8.0_202)
 # Add boost
@@ -225,34 +227,21 @@ export QUARTO_PYTHON='/Users/arsouze/miniconda3/bin/python'
 # EDITOR 
 export EDITOR=nvim
 
+export TODO_DIR="$HOME/.todo"
+export TODO_FILE="$TODO_DIR/todo.txt"
+export DONE_FILE="$TODO_DIR/done.txt"
+
 # Unknown QT need
 export QT_MAC_WANTS_LAYER=1
 
 # Television : https://alexpasmantier.github.io/television/
 eval "$(tv init zsh)"
+#source $HOME/.config/television/shell/integration.zsh
 
 # Pixi
 export PATH=$PATH:/Users/arsouze/.pixi/bin
 eval "$(pixi completion --shell zsh)"
 eval "$(rattler-build completion --shell zsh)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/arsouze/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/arsouze/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/arsouze/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/arsouze/miniconda3/bin:$PATH"
-    fi
-fi
-if [ -f "/Users/arsouze/miniconda3/etc/profile.d/mamba.sh" ]; then
-    . "/Users/arsouze/miniconda3/etc/profile.d/mamba.sh"
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # Set .condarc file
 cat <<EOF >~/.condarc
@@ -360,3 +349,16 @@ export PATH="/usr/local/sbin:$PATH"
 source /Users/arsouze/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+export MAMBA_EXE='/Users/arsouze/miniconda3/bin/mamba';
+export MAMBA_ROOT_PREFIX='/Users/arsouze/miniconda3';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
