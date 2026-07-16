@@ -9,3 +9,9 @@ sort_by = "mtime"
 sort_reverse = true         # newest files first
 sort_dir_first = true       # folders before files
 linemode = "size_and_mtime" # cf. init.lua
+
+[plugin]
+prepend_previewers = [
+  { url = "*.nc", run = 'piper -- ncdump -h "$1"' },
+  { url = "*.nc4", run = 'piper -- ncdump -h "$1"' },
+]
