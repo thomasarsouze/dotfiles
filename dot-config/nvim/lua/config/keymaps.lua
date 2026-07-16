@@ -45,3 +45,8 @@ vim.keymap.set("n", "<C-+>", [[<cmd>vertical resize +5<cr>]]) -- agrandit la fen
 vim.keymap.set("n", "<C-->", [[<cmd>vertical resize -5<cr>]]) -- réduit la taille de la fenêtre verticalement
 vim.keymap.set("n", "<C->>", [[<cmd>horizontal resize +2<cr>]]) -- agrandit la fenêtre horizontalement en appuyant sur Shift et =
 vim.keymap.set("n", "<C-<>", [[<cmd>horizontal resize -2<cr>]]) -- réduit la taille de la fenêtre horizontalement en appuyant sur Shift et -
+
+-- start Ipython
+local repl = require("python_interactive")
+vim.keymap.set("n", "<leader>ci", repl.start_python, { desc = "Start IPython" })
+vim.keymap.set("n", "<leader>cp", repl.start_python_autoreload, { desc = "Start IPython with autoreload" })

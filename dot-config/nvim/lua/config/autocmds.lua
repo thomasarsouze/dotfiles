@@ -21,3 +21,42 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
   desc = "LSP: Disable hover capability from Ruff",
 })
+
+local repl = require("python_interactive")
+local quarto_dispatch = require("quarto-dispatch")
+
+-- autocmd to define so mappings for python
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "python" },
+  callback = function(args)
+    local opts = {
+      buffer = args.buf,
+      silent = true,
+    }
+
+    vim.keymap.set("n", "<CR>", repl.send_line, opts)
+    vim.keymap.set("x", "<CR>", repl.send_selection, opts)
+    vim.keymap.set("n", "<S-CR>", repl.send_cell, opts)
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "quarto",
+  callback = function(args)
+    vim.keymap.set("n", "<CR>", quarto_dispatch.run_line, {
+      buffer = args.buf,
+      silent = true,
+      desc = "Run current Quarto line",
+    })
+    vim.keymap.set("x", "<CR>", quarto_dispatch.run_range, {
+      buffer = args.buf,
+      silent = true,
+      desc = "Run Quarto selection",
+    })
+    vim.keymap.set("n", "<S-CR>", quarto_dispatch.run_cell, {
+      buffer = args.buf,
+      silent = true,
+      desc = "Run Quarto cell",
+    })
+  end,
+})
