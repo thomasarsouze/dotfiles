@@ -37,11 +37,23 @@ on = "J"
 run = "plugin parent-arrow 1"
 
 [[mgr.prepend_keymap]]
-on = "<C-m>"
+on = "<M>"
 run = '''shell --
-	paths=$(for p in %s; do echo "$p"; done | paste -s -d,)
-	thunderbird -compose "attachment='$paths'"
+paths=""
+for p in $(echo "%s"); do
+    abs=$(realpath "$p")
+    echo "ABS=$abs" >> /Users/arsouze/debug.txt
+
+    if [ -z "$paths" ]; then
+        paths="file://$abs"
+    else
+        paths="$paths,file://$abs"
+    fi
+done
+/Applications/Thunderbird.app/Contents/MacOS/thunderbird \
+    -compose "attachment='$paths'"
 '''
+desc = "Send a mail with selected files in attachment"
 
 [[mgr.prepend_keymap]]
 on = ["t", "t"]
