@@ -105,6 +105,8 @@ function M.send_selection()
     -- require("quarto.runner").run_range()
     vim.cmd("MoltenEvaluateVisual")
   elseif is_python() then
+    -- leave visual mode first so the '< and '> marks are committed
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
     local lines = vim.api.nvim_buf_get_lines(0, vim.fn.line("'<") - 1, vim.fn.line("'>"), false)
     send(table.concat(lines, "\n") .. "\n")
   end
