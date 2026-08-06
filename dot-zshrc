@@ -158,9 +158,6 @@ alias zshrc='nvim ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 alias szshrc='source ${ZDOTDIR:-$HOME}/.zshrc'
 alias nv="nvim"
 
-alias -g marker_single="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker_single --batch_multiplier 2"
-alias -g marker="/Users/arsouze/Documents/Codes_divers/marker/.pixi/envs/default/bin/marker"
-
 alias dud='du -d 1 -h' # size of directories at level 1
 alias dd='sudo /usr/local/bin/ntfs-3g /dev/disk1s1 /Volumes/NTFS -o local -o allow_other -o auto_xattr -o auto_cache' # external hard drive mounting
 alias ff='find . -type f -name' # file search by name
