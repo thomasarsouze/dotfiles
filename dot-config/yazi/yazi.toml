@@ -15,3 +15,32 @@ prepend_previewers = [
   { url = "*.nc", run = 'piper -- ncdump -h "$1"' },
   { url = "*.nc4", run = 'piper -- ncdump -h "$1"' },
 ]
+
+[opener]
+acrobat = [
+  { run = 'open -a "/Applications/Adobe Acrobat Reader.app/Contents/MacOS/AdobeReader" "$@"', orphan = true, desc = "Adobe Acrobat" },
+]
+powerpoint = [
+  { run = 'open -a "Microsoft PowerPoint" "$@"', orphan = true, desc = "PowerPoint" },
+]
+word = [{ run = 'open -a "Microsoft Word" "$@"', orphan = true, desc = "Word" }]
+
+[[open.rules]]
+mime = "application/pdf"
+use = ["open", "acrobat"]
+
+[[open.prepend_rules]]
+url = "*.pptx"
+use = "powerpoint"
+
+[[open.prepend_rules]]
+url = "*.ppt"
+use = "powerpoint"
+
+[[open.prepend_rules]]
+url = "*.docx"
+use = "word"
+
+[[open.prepend_rules]]
+url = "*.doc"
+use = "word"
