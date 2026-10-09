@@ -13,6 +13,7 @@ command = "mamba list -n '{}'"
 layout = "landscape"
 
 [keybindings]
+enter = "actions:activate"
 ctrl-e = "actions:activate"
 ctrl-d = "actions:remove"
 
@@ -23,5 +24,5 @@ mode = "execute"
 
 [actions.remove]
 description = "Remove the whole environment"
-command = "tmux send-keys C-u 'mamba remove {} --all -y' Enter"
+command = "tmux send-keys C-u 'mamba env remove -n {} -y' Enter"
 mode = "execute"
