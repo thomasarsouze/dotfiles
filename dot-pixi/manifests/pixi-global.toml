@@ -103,3 +103,8 @@ exposed = { markdown-toc = "markdown-toc" }
 channels = ["conda-forge"]
 dependencies = { markdownlint-cli2 = "*" }
 exposed = { markdownlint-cli2 = "markdownlint-cli2" }
+
+[envs.complexipy]
+channels = ["conda-forge"]
+dependencies = { complexipy = "*" }
+exposed = { complexipy = "complexipy" }
