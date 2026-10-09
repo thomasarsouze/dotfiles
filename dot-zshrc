@@ -255,7 +255,10 @@ if ! [[ $(ifconfig | grep 192.168) ]]; then
   echo "ssl_verify: /Users/arsouze/.conda/certif/Fortinet_CA_SSL.crt" >> ~/.condarc
 fi
 
-
+# Secrets management:
+if [[ -f "$HOME/.secrets.gpg" ]]; then
+    eval "$(gpg --quiet --decrypt "$HOME/.secrets.gpg")"
+fi
 
 # Golang environment variables
 export GOROOT=/usr/local/go
