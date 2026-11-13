@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PYTHON="/Users/arsouze/miniconda3/envs/docling/bin/python"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+exec "$PYTHON" "$DIR/convert_pdf.py" "$@"

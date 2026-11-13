@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+# Vérifier la présence de GPG
+command -v gpg >/dev/null 2>&1 || {
+    echo "Erreur : GPG introuvable."
+    exit 1
+}
+
+# Déchiffrer les secrets et exporter les variables
+set -a
+source <(gpg --quiet --decrypt "$HOME/.secrets.gpg")
+set +a
+
+# Vérifier la présence de la clé Albert
+if [[ -z "${ALBERT_API_KEY:-}" ]]; then
+    echo "Erreur : ALBERT_API_KEY absente."
+    exit 1
+fi
+
+echo "Secrets GPG chargés."
+echo "ALBERT_API_KEY présente."
+
+# Démarrer OpenCode avec les variables chargées
+exec opencode "$@"
+

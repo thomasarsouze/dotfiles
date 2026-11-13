@@ -108,3 +108,8 @@ exposed = { markdownlint-cli2 = "markdownlint-cli2" }
 channels = ["conda-forge"]
 dependencies = { complexipy = "*" }
 exposed = { complexipy = "complexipy" }
+
+[envs.docling]
+channels = ["conda-forge"]
+dependencies = { docling = "*" }
+exposed = { docling = "docling" }
