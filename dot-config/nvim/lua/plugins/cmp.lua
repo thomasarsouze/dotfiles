@@ -1,9 +1,14 @@
 return {
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = { 
-      -- Completion using R.nvim as backend
-      "R-nvim/cmp-r",
+    "saghen/blink.cmp",
+    dependencies = { "R-nvim/cmp-r", "saghen/blink.compat" },
+    opts = {
+      sources = {
+        compat = { "cmp_r" },
+        providers = {
+          cmp_r = { kind = "R" },
+        },
+      },
     },
   },
 }
