@@ -8,9 +8,19 @@ command -v gpg >/dev/null 2>&1 || {
     exit 1
 }
 
+# Indiquer à GPG le terminal courant
+export GPG_TTY="$(tty)"
+# Actualiser le terminal utilisé par l'agent GPG
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
 # Déchiffrer les secrets et exporter les variables
+TMP_SECRETS=$(mktemp)
+
+gpg --quiet --yes --output "$TMP_SECRETS" --decrypt "$HOME/.secrets.gpg"
+
+# Chargement des variables d'environnement
 set -a
-source <(gpg --quiet --decrypt "$HOME/.secrets.gpg")
+source "$TMP_SECRETS"
 set +a
 
 # Vérifier la présence de la clé Albert
@@ -24,4 +34,3 @@ echo "ALBERT_API_KEY présente."
 
 # Démarrer OpenCode avec les variables chargées
 exec opencode "$@"
-
