@@ -1,6 +1,8 @@
 import argparse
+from datetime import datetime, timezone
 from pathlib import Path
 
+import yaml
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions
 from docling.document_converter import (
@@ -8,6 +10,44 @@ from docling.document_converter import (
     PdfFormatOption,
 )
 from docling_core.types.doc import ImageRefMode
+from pypdf import PdfReader
+
+
+def write_pdf_metadata(input_file: Path) -> str:
+    reader = PdfReader(str(input_file))
+    pdf_info = reader.metadata
+
+    def get_pdf_field(field):
+        if pdf_info is None:
+            return None
+
+        value = getattr(pdf_info, field, None)
+
+        if isinstance(value, datetime):
+            return value.isoformat()
+
+        return str(value) if value else None
+
+    metadata = {
+        "source_file": input_file.name,
+        "title": get_pdf_field("title") or input_file.stem,
+        "author": get_pdf_field("author"),
+        "subject": get_pdf_field("subject"),
+        "creator": get_pdf_field("creator"),
+        "producer": get_pdf_field("producer"),
+        "creation_date": get_pdf_field("creation_date"),
+        "modification_date": get_pdf_field("modification_date"),
+        "conversion_date": datetime.now(timezone.utc).isoformat(),
+    }
+
+    # Write front matter
+    frontmatter = yaml.safe_dump(
+        metadata,
+        allow_unicode=True,
+        sort_keys=False,
+    )
+
+    return f"---\n{frontmatter}---\n\n"
 
 
 def convert_pdf(input_file: Path, output_dir: Path | None, ocr: bool):
@@ -25,6 +65,9 @@ def convert_pdf(input_file: Path, output_dir: Path | None, ocr: bool):
 
     # Nom du fichier Markdown basé sur le PDF
     output_file = output_dir / f"{input_file.stem}.md"
+
+    # Recuperer les metadonnees
+    frontmatter = write_pdf_metadata(input_file)
 
     # Configuration du pipeline PDF
     pipeline_options = PdfPipelineOptions(
@@ -48,10 +91,13 @@ def convert_pdf(input_file: Path, output_dir: Path | None, ocr: bool):
     result = converter.convert(input_file)
 
     # Export Markdown avec images référencées
-    result.document.save_as_markdown(
-        str(output_file),
+    markdown = result.document.export_to_markdown(
         image_mode=ImageRefMode.REFERENCED,
     )
+
+    with open(str(output_file), "w", encoding="utf-8") as f:
+        f.write(frontmatter)
+        f.write(markdown)
 
     print(f"Markdown généré : {output_file}")
 
